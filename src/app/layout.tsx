@@ -1,44 +1,46 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, Inter } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "./globals.css";
 
-const dmSerif = DM_Serif_Display({
-  weight: "400",
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-dm-serif",
+  variable: "--font-heading",
   display: "swap",
+  weight: ["500", "600", "700", "800"],
 });
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-body",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "TrueVolt Systems — Solar, Electrical & Security Solutions",
+  title: "TrueVolt Systems Ltd — Solar, Electrical & Security Engineering | Kenya",
   description:
-    "TrueVolt Systems delivers expert solar installations, electrical services, and security systems for residential and commercial properties. Trusted quality, lasting performance.",
+    "TrueVolt Systems Ltd delivers expert solar installations, NCA-certified electrical contracting, and smart security systems across Kenya. EPRA licensed, KPLC compliant.",
   keywords: [
-    "solar installation",
-    "electrical contractor",
-    "security systems",
-    "solar panels",
-    "CCTV installation",
-    "electrical wiring",
-    "TrueVolt Systems",
+    "solar installation Kenya",
+    "electrical contractor Nairobi",
+    "security systems Kenya",
+    "solar panels Nairobi",
+    "CCTV installation Kenya",
+    "electric fencing Nairobi",
+    "EPRA licensed solar Kenya",
+    "NCA registered contractor",
+    "TrueVolt Systems Ltd",
   ],
   openGraph: {
-    title: "TrueVolt Systems — Solar, Electrical & Security Solutions",
+    title: "TrueVolt Systems Ltd — Solar, Electrical & Security Engineering | Kenya",
     description:
-      "Expert solar, electrical and security installations. Trusted quality, lasting performance.",
+      "Expert solar, electrical and security installations across Kenya. EPRA licensed, NCA registered, trusted quality.",
     type: "website",
   },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${dmSerif.variable} ${inter.variable}`}>
+    <html lang="en" className={`${plusJakartaSans.variable} ${inter.variable}`}>
       <body>{children}</body>
     </html>
   );

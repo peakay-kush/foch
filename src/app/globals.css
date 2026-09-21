@@ -1,22 +1,41 @@
 @import "tailwindcss";
 
 @theme inline {
+  /* ── Brand palette ── */
+  --color-brand-blue: #2854A6;
+  --color-brand-blue-hover: #1E4388;
+  --color-brand-blue-deep: #16366E;
+  --color-brand-orange: #F7941D;
+  --color-brand-orange-hover: #E07D0C;
+  --color-brand-dark: #1C1C1C;
+
+  /* ── Surfaces ── */
   --color-warm: #FAF8F5;
   --color-warm-dark: #F0EDE8;
-  --color-dark: #1A1A1A;
-  --color-dark-soft: #2A2A2A;
-  --color-accent: #C45C2C;
-  --color-accent-hover: #A84B22;
-  --color-text: #3A3A3A;
-  --color-text-muted: #7A7A7A;
-  --color-border: #E0DCD6;
-  --color-border-dark: #3A3A3A;
+  --color-dark: #161B26; /* Deep navy-charcoal tone to complement the blue */
+  --color-dark-soft: #1D2331;
   --color-surface: #FFFFFF;
-  --color-placeholder: #E8E4DE;
-  --color-placeholder-dark: #D4CFC7;
 
-  --font-heading: "DM Serif Display", Georgia, "Times New Roman", serif;
-  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* ── Text ── */
+  --color-text: #2D3748;
+  --color-text-muted: #64748B;
+
+  /* ── Borders ── */
+  --color-border: #E2E8F0;
+  --color-border-dark: #2A3449;
+
+  /* ── Placeholder ── */
+  --color-placeholder: #E8EDF5;
+  --color-placeholder-dark: #CBD5E1;
+
+  /* ── Dominant Accent is now Royal Blue ── */
+  --color-accent: #2854A6;
+  --color-accent-hover: #1E4388;
+
+  /* ── Fonts ── */
+  --font-heading: var(--font-heading), "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-body: var(--font-body), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: var(--font-body), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 /* ---- Base ---- */
@@ -34,21 +53,63 @@ body {
 }
 
 ::selection {
-  background-color: var(--color-accent);
+  background-color: var(--color-brand-blue);
   color: #fff;
 }
 
 /* ---- Typography ---- */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
-  color: var(--color-dark);
-  line-height: 1.1;
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--color-dark);
+  }
+
+  h1 {
+    font-weight: 800;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+  }
+
+  h2 {
+    font-weight: 700;
+    line-height: 1.16;
+    letter-spacing: -0.025em;
+  }
+
+  h3 {
+    font-weight: 700;
+    line-height: 1.28;
+    letter-spacing: -0.02em;
+  }
+
+  h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+  }
+
+  p {
+    line-height: 1.6;
+    letter-spacing: -0.008em;
+  }
+
+  .bg-dark h1, .bg-dark h2, .bg-dark h3, .bg-dark h4, .bg-dark h5, .bg-dark h6,
+  .bg-dark-soft h1, .bg-dark-soft h2, .bg-dark-soft h3, .bg-dark-soft h4, .bg-dark-soft h5, .bg-dark-soft h6 {
+    color: #FFFFFF;
+  }
 }
 
 /* ---- Utility ---- */
 .section-padding {
-  padding-top: 7rem;
-  padding-bottom: 7rem;
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding-top: 5.5rem;
+    padding-bottom: 5.5rem;
+  }
 }
 
 .container-custom {
@@ -69,14 +130,14 @@ h1, h2, h3, h4, h5, h6 {
 /* ---- Label ---- */
 .label {
   font-size: 0.7rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--color-text-muted);
 }
 
 .label-accent {
-  color: var(--color-accent);
+  color: var(--color-brand-blue);
 }
 
 /* ---- Divider ---- */
@@ -98,36 +159,58 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   overflow: hidden;
   position: relative;
+  border: 1px solid rgba(40, 84, 166, 0.08);
 }
 
 .img-placeholder span {
   font-size: 0.65rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--color-text-muted);
-  opacity: 0.6;
+  color: var(--color-brand-blue);
+  opacity: 0.7;
 }
 
-/* ---- Button ---- */
+/* ---- Button (Dominant Blue) ---- */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.875rem 2rem;
-  background-color: var(--color-accent);
+  background-color: var(--color-brand-blue);
   color: #fff;
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   border: none;
   cursor: pointer;
-  transition: background-color 0.25s ease;
+  transition: all 0.25s ease;
 }
 
 .btn-primary:hover {
-  background-color: var(--color-accent-hover);
+  background-color: var(--color-brand-blue-hover);
+  box-shadow: 0 4px 14px rgba(40, 84, 166, 0.35);
+}
+
+.btn-orange {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background-color: var(--color-brand-orange);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-orange:hover {
+  background-color: var(--color-brand-orange-hover);
 }
 
 .btn-outline {
@@ -136,27 +219,29 @@ h1, h2, h3, h4, h5, h6 {
   gap: 0.5rem;
   padding: 0.875rem 2rem;
   background-color: transparent;
-  color: var(--color-dark);
+  color: var(--color-brand-blue);
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  border: 1px solid var(--color-border);
+  border: 1.5px solid var(--color-brand-blue);
   cursor: pointer;
   transition: all 0.25s ease;
 }
 
 .btn-outline:hover {
-  border-color: var(--color-dark);
+  background-color: var(--color-brand-blue);
+  color: #fff;
 }
 
 .btn-outline-light {
   color: #fff;
-  border-color: rgba(255,255,255,0.25);
+  border-color: rgba(255,255,255,0.3);
 }
 
 .btn-outline-light:hover {
   border-color: #fff;
+  background-color: rgba(255,255,255,0.08);
 }
 
 /* ---- Scroll reveal animation ---- */
@@ -173,16 +258,84 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ---- Navbar animation ---- */
 .nav-scrolled {
-  background-color: rgba(250, 248, 245, 0.95) !important;
+  background-color: rgba(250, 248, 245, 0.96) !important;
   backdrop-filter: blur(12px);
   box-shadow: 0 1px 0 var(--color-border);
 }
 
 /* ---- Form inputs ---- */
-input, textarea {
+input, textarea, select {
   font-family: var(--font-body);
 }
 
-input:focus, textarea:focus {
+input:focus, textarea:focus, select:focus {
   outline: none;
+  border-color: var(--color-brand-blue) !important;
+}
+
+/* ---- Marquee animation ---- */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---- Hero tile hover ---- */
+.hero-tile {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s ease, border-color 0.35s ease;
+}
+
+.hero-tile:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-brand-blue);
+}
+
+.hero-tile::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: var(--color-brand-blue);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.hero-tile:hover::after {
+  transform: scaleX(1);
+}
+
+/* ---- Dot grid background ---- */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(40, 84, 166, 0.15) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ---- Stagger animation delays ---- */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
 }
