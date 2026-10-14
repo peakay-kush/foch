@@ -126,10 +126,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </button>
       </form>
 
-      <!-- Credentials Hint -->
-      <div class="mt-6 pt-5 border-t border-slate-100 text-center text-xs text-slate-500">
-        Default: <span class="font-semibold text-slate-700">admin</span> / <span class="font-semibold text-slate-700">TrueVolt@2025</span>
-      </div>
 
     </div>
 
