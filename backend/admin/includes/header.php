@@ -4,6 +4,14 @@ requireAuth();
 $admin = getCurrentAdmin();
 $currentPage = basename($_SERVER['PHP_SELF']);
 
+// Ensure /admin is accessed with trailing slash so all relative links resolve correctly
+// (Apache mod_dir does this automatically; PHP's built-in dev server does not)
+$requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+if ($requestPath && preg_match('#/admin$#', $requestPath)) {
+    header('Location: ' . $requestPath . '/');
+    exit;
+}
+
 // Count unread inquiries if db is connected
 $unreadInquiriesCount = 0;
 try {
