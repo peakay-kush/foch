@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@source "../**/*.php";
+
+@theme {
+  --color-brand-blue: #2854A6;
+  --color-brand-blueHover: #1E4388;
+  --color-brand-orange: #F7941D;
+  --color-brand-orangeHover: #E07D0C;
+  --color-brand-dark: #1C1C1C;
+  --color-brand-warm: #FAF8F5;
+  --color-brand-border: #E2E8F0;
+
+  --font-sans: 'Inter', sans-serif;
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #FAF8F5;
+  color: #2D3748;
+}
+
+h1, h2, h3, h4, .font-heading {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}

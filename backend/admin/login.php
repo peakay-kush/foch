@@ -46,14 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrueVolt Admin — Login</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/admin.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', sans-serif; background-color: #FAF8F5; }
-    h1, h2, h3 { font-family: 'Plus Jakarta Sans', sans-serif; }
-  </style>
 </head>
 <body class="h-full bg-[#FAF8F5] text-slate-800 flex items-center justify-center p-4 antialiased">
 
@@ -63,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="text-center mb-8">
       <a href="/" class="inline-block">
         <img
-          src="/images/truevolt-logo-transparent.png"
+          src="../images/truevolt-logo-transparent.png"
           alt="TrueVolt Systems Ltd"
           class="h-14 sm:h-16 w-auto object-contain mx-auto"
           onerror="this.onerror=null; this.src='../images/truevolt-logo-transparent.png';"

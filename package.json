@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:admin-css": "npx @tailwindcss/cli -i backend/admin/css/admin-input.css -o backend/admin/css/admin.css --minify",
     "start": "next start",
     "lint": "eslint"
   },

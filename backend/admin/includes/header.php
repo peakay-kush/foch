@@ -27,37 +27,10 @@ try {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle) . ' — TrueVolt Admin' : 'TrueVolt Systems — Admin Portal' ?></title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/admin.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              blue: '#2854A6',
-              blueHover: '#1E4388',
-              orange: '#F7941D',
-              orangeHover: '#E07D0C',
-              dark: '#1C1C1C',
-              warm: '#FAF8F5',
-              border: '#E2E8F0',
-            }
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            heading: ['"Plus Jakarta Sans"', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    body { font-family: 'Inter', sans-serif; background-color: #FAF8F5; color: #2D3748; }
-    h1, h2, h3, h4, .font-heading { font-family: 'Plus Jakarta Sans', sans-serif; }
-  </style>
 </head>
 <body class="min-h-full bg-[#FAF8F5] text-slate-800 flex flex-col antialiased">
 
@@ -70,7 +43,7 @@ try {
         <div class="flex items-center gap-8">
           <a href="index.php" class="flex items-center group">
             <img
-              src="/images/truevolt-logo-transparent.png"
+              src="../images/truevolt-logo-transparent.png"
               alt="TrueVolt Systems Ltd"
               class="h-10 sm:h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]"
               onerror="this.onerror=null; this.src='../images/truevolt-logo-transparent.png';"
