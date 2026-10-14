@@ -94,7 +94,7 @@ try {
         <div class="flex items-center gap-3">
           
           <a
-            href="http://localhost:3000"
+            href="<?= htmlspecialchars(getLiveSiteUrl()) ?>"
             target="_blank"
             class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-500 hover:text-[#2854A6] hover:bg-slate-50 transition-colors"
             title="View Live Website"
@@ -201,7 +201,7 @@ try {
         </a>
 
         <a
-          href="http://localhost:3000"
+          href="<?= htmlspecialchars(getLiveSiteUrl()) ?>"
           target="_blank"
           class="flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors"
         >

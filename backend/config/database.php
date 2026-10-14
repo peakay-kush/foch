@@ -48,8 +48,17 @@ define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : '');
 define('DB_CHARSET', 'utf8mb4');
 
 // Base URL for image paths and uploads
-// Leave empty for auto-detection based on current HTTP request
 define('APP_URL', getenv('APP_URL') ?: '');
+
+// Frontend Live Site URL (fallback to localhost:3000)
+define('LIVE_SITE_URL', getenv('LIVE_SITE_URL') ?: (getenv('APP_URL') ?: 'http://localhost:3000'));
+
+/**
+ * Returns the configured frontend live website URL
+ */
+function getLiveSiteUrl(): string {
+    return defined('LIVE_SITE_URL') && !empty(LIVE_SITE_URL) ? rtrim(LIVE_SITE_URL, '/') : 'http://localhost:3000';
+}
 
 /**
  * Returns a singleton PDO connection

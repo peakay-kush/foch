@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Live Site Link -->
     <div class="text-center mt-6">
-      <a href="http://localhost:3000" target="_blank" class="text-xs text-slate-500 hover:text-[#2854A6] transition-colors">
+      <a href="<?= htmlspecialchars(getLiveSiteUrl()) ?>" target="_blank" class="text-xs text-slate-500 hover:text-[#2854A6] transition-colors">
         &larr; Return to Live Website
       </a>
     </div>

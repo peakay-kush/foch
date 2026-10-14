@@ -116,7 +116,7 @@ require_once __DIR__ . '/includes/header.php';
   </div>
   <div>
     <a
-      href="http://localhost:3000"
+      href="<?= htmlspecialchars(getLiveSiteUrl()) ?>"
       target="_blank"
       class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:text-[#2854A6] hover:border-[#2854A6] transition-colors shadow-xs"
     >
