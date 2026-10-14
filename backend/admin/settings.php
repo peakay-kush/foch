@@ -349,18 +349,6 @@ require_once __DIR__ . '/includes/header.php';
       </form>
     </div>
 
-    <!-- Security Information Box -->
-    <div class="bg-[#FAF8F5] border border-slate-200 rounded-2xl p-5 text-xs text-slate-600 space-y-2">
-      <div class="font-bold text-slate-900 flex items-center gap-2">
-        <svg class="w-4 h-4 text-[#2854A6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-        </svg>
-        <span>TrueVolt Cryptographic Hashing</span>
-      </div>
-      <p class="leading-relaxed">
-        Passwords are encrypted using industry-standard Bcrypt (<span class="font-mono text-slate-800">PASSWORD_DEFAULT</span>). The database stores only the salted cryptographic hash, ensuring credentials cannot be reversed or leaked in plain text.
-      </p>
-    </div>
 
   </div>
 
