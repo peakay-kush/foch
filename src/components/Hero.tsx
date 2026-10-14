@@ -1,8 +1,19 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { fetchSiteContent, DEFAULT_SITE_CONTENT, resolveImageUrl, SiteContent } from "@/lib/api";
 
 export default function Hero() {
+  const [content, setContent] = useState<SiteContent>(DEFAULT_SITE_CONTENT);
+
+  useEffect(() => {
+    fetchSiteContent().then((res) => setContent(res));
+  }, []);
+
+  // Split headline lines if needed
+  const headlineParts = (content.hero_headline || DEFAULT_SITE_CONTENT.hero_headline).split("\n");
+
   return (
     <section id="hero" className="relative bg-[#FAF8F5] pt-28 pb-20 lg:pt-36 lg:pb-24 overflow-hidden border-b border-border">
       {/* Soft ambient backdrops */}
@@ -14,19 +25,17 @@ export default function Hero() {
           
           {/* ── Left Column: Value Proposition ── */}
           <div className="lg:col-span-7 xl:pr-6">
-            
-
 
             {/* Headline */}
             <h1 className="text-[clamp(2.5rem,5vw,4.2rem)] font-heading leading-[1.08] text-slate-900 mb-6">
-              Power your property.
+              {headlineParts[0] || "Power your property."}
               <br />
-              <span className="text-brand-blue">Protect what matters.</span>
+              <span className="text-brand-blue">{headlineParts[1] || "Protect what matters."}</span>
             </h1>
 
             {/* Narrative */}
             <p className="text-[1.08rem] leading-relaxed text-slate-600 max-w-xl mb-9">
-              TrueVolt Systems Ltd delivers dependable solar power installations, certified electrical engineering, and smart security systems for Kenyan homes and commercial facilities.
+              {content.hero_description || DEFAULT_SITE_CONTENT.hero_description}
             </p>
 
             {/* Action Buttons */}
@@ -87,14 +96,12 @@ export default function Hero() {
 
           </div>
 
-          {/* ── Right Column: Clean Framed Image & Description with Blue Curvature ── */}
+          {/* ── Right Column: Dynamic Showcase Image & Narrative ── */}
           <div className="lg:col-span-5">
             <div className="relative p-3">
               
-              {/* Sharp Architectural Blue Corner Bracket (Replacing Curvature) */}
+              {/* Corner Brackets */}
               <div className="absolute -top-3 -left-3 w-12 h-12 border-t-[3.5px] border-l-[3.5px] border-brand-blue pointer-events-none z-20" />
-
-              {/* Matching Bottom-Right Offset Architectural Bracket */}
               <div className="absolute -bottom-3 -right-3 w-12 h-12 border-b-[3.5px] border-r-[3.5px] border-brand-blue pointer-events-none z-20" />
 
               {/* Outer Framed Container */}
@@ -103,8 +110,8 @@ export default function Hero() {
                 {/* Main Image Container */}
                 <div className="aspect-[4/3] bg-[#E8EDF5] relative overflow-hidden flex items-center justify-center border-b border-border group">
                   <Image
-                    src="/images/projects/hero-showcase.jpeg"
-                    alt="TrueVolt Systems - Turnkey Hybrid Energy & Perimeter Security Installation"
+                    src={resolveImageUrl(content.hero_showcase_image || DEFAULT_SITE_CONTENT.hero_showcase_image)}
+                    alt={content.hero_showcase_title || "TrueVolt Systems Showcase"}
                     fill
                     sizes="(max-width: 768px) 100vw, 500px"
                     priority
@@ -120,19 +127,19 @@ export default function Hero() {
                   </div>
                 </div>
 
-                {/* Clean Description (No Busy Clutter) */}
+                {/* Description Box */}
                 <div className="p-6 bg-white">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="text-lg font-heading text-slate-900">
-                      Turnkey Property Installation
+                      {content.hero_showcase_title || DEFAULT_SITE_CONTENT.hero_showcase_title}
                     </h3>
                     <span className="text-[0.72rem] font-mono text-brand-blue font-bold">
-                      Karen, Nairobi
+                      {content.hero_showcase_location || DEFAULT_SITE_CONTENT.hero_showcase_location}
                     </span>
                   </div>
 
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    A complete hybrid energy and integrated security deployment — featuring rooftop solar generation, smart battery backup, certified distribution board wiring, and IP perimeter surveillance.
+                    {content.hero_showcase_description || DEFAULT_SITE_CONTENT.hero_showcase_description}
                   </p>
                 </div>
 

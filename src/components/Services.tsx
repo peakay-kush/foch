@@ -1,30 +1,52 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { fetchSiteContent, DEFAULT_SITE_CONTENT, resolveImageUrl, SiteContent } from "@/lib/api";
 
 export default function Services() {
+  const [content, setContent] = useState<SiteContent>(DEFAULT_SITE_CONTENT);
+
+  useEffect(() => {
+    fetchSiteContent().then((res) => setContent(res));
+  }, []);
+
+  const parseTags = (tagsStr?: string, defaultTags: string[] = []): string[] => {
+    if (!tagsStr) return defaultTags;
+    const split = tagsStr.split(",").map((s) => s.trim()).filter(Boolean);
+    return split.length > 0 ? split : defaultTags;
+  };
+
   const services = [
     {
       num: "01",
-      title: "Solar Installations",
-      statement: "Eliminate KPLC outage downtime with custom-engineered photovoltaic arrays and high-capacity lithium storage.",
-      tags: ["Rooftop PV Arrays", "Battery Backup", "Hybrid Inverters", "Grid-Tie Systems"],
+      badge: content.services_solar_badge || DEFAULT_SITE_CONTENT.services_solar_badge,
+      title: content.services_solar_title || DEFAULT_SITE_CONTENT.services_solar_title,
+      statement: content.services_solar_statement || DEFAULT_SITE_CONTENT.services_solar_statement,
+      tags: parseTags(content.services_solar_tags, ["Rooftop PV Arrays", "Battery Backup", "Hybrid Inverters", "Grid-Tie Systems"]),
       link: "/services/solar",
-      image: "/images/projects/solar-panel-installation.jpeg",
+      image: resolveImageUrl(content.services_solar_image || DEFAULT_SITE_CONTENT.services_solar_image),
+      badgeColor: "bg-amber-50 text-[#F7941D] border-amber-200",
     },
     {
       num: "02",
-      title: "Electrical Contracting",
-      statement: "Complete distribution board overhauls, three-phase reticulation, and certified NCA-compliant electrical installations.",
-      tags: ["Main DB Boards", "Three-Phase Wiring", "NCA Certified", "Fault Rectification"],
+      badge: content.services_electrical_badge || DEFAULT_SITE_CONTENT.services_electrical_badge,
+      title: content.services_electrical_title || DEFAULT_SITE_CONTENT.services_electrical_title,
+      statement: content.services_electrical_statement || DEFAULT_SITE_CONTENT.services_electrical_statement,
+      tags: parseTags(content.services_electrical_tags, ["Main DB Boards", "Three-Phase Wiring", "NCA Certified", "Fault Rectification"]),
       link: "/services/electrical",
-      image: "/images/projects/electrical-modern-lighting.jpeg",
+      image: resolveImageUrl(content.services_electrical_image || DEFAULT_SITE_CONTENT.services_electrical_image),
+      badgeColor: "bg-blue-50 text-[#2854A6] border-blue-200",
     },
     {
       num: "03",
-      title: "Security Systems",
-      statement: "Integrated perimeter protection combining 4K optical surveillance, zoned electric fencing, and smart access control.",
-      tags: ["4K IP CCTV", "Electric Fencing", "Intruder Alarms", "Biometric Access"],
+      badge: content.services_security_badge || DEFAULT_SITE_CONTENT.services_security_badge,
+      title: content.services_security_title || DEFAULT_SITE_CONTENT.services_security_title,
+      statement: content.services_security_statement || DEFAULT_SITE_CONTENT.services_security_statement,
+      tags: parseTags(content.services_security_tags, ["4K IP CCTV", "Electric Fencing", "Intruder Alarms", "Biometric Access"]),
       link: "/services/security",
-      image: "/images/projects/security-cctv-surveillance.jpeg",
+      image: resolveImageUrl(content.services_security_image || DEFAULT_SITE_CONTENT.services_security_image),
+      badgeColor: "bg-slate-100 text-slate-800 border-slate-200",
     },
   ];
 
@@ -78,8 +100,8 @@ export default function Services() {
 
                     {/* Architectural reference badge over image */}
                     <div className="absolute bottom-3 left-3 z-10 flex items-center gap-2">
-                      <span className="font-mono text-[0.62rem] font-bold text-white bg-slate-900/80 px-2 py-0.5 tracking-widest uppercase border border-white/10 backdrop-blur-xs">
-                        System #{item.num}
+                      <span className="font-mono text-[0.65rem] font-bold text-white bg-slate-900/85 px-2.5 py-0.5 tracking-wider uppercase border border-white/10 backdrop-blur-xs">
+                        {item.badge}
                       </span>
                     </div>
                   </div>
@@ -87,6 +109,17 @@ export default function Services() {
 
                 {/* ── Swiss Typography Body ── */}
                 <div className="p-7">
+                  
+                  {/* Division Badge & Number */}
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-mono text-xs font-bold text-slate-400">
+                      System #{item.num}
+                    </span>
+                    <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${item.badgeColor}`}>
+                      {item.badge}
+                    </span>
+                  </div>
+
                   {/* Bold Sans-Serif Title */}
                   <h3 className="text-xl font-bold tracking-tight text-slate-900 mb-3 group-hover:text-brand-blue transition-colors">
                     {item.title}

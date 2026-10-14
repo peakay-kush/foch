@@ -1,0 +1,289 @@
+<?php
+require_once __DIR__ . '/../auth.php';
+requireAuth();
+$admin = getCurrentAdmin();
+$currentPage = basename($_SERVER['PHP_SELF']);
+
+// Count unread inquiries if db is connected
+$unreadInquiriesCount = 0;
+try {
+    $dbHeader = getDbConnection();
+    $unreadInquiriesCount = (int)$dbHeader->query("SELECT COUNT(*) FROM inquiries WHERE is_read = 0")->fetchColumn();
+} catch (Throwable $t) {
+    // Graceful fallback
+}
+?>
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle) . ' — TrueVolt Admin' : 'TrueVolt Systems — Admin Portal' ?></title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              blue: '#2854A6',
+              blueHover: '#1E4388',
+              orange: '#F7941D',
+              orangeHover: '#E07D0C',
+              dark: '#1C1C1C',
+              warm: '#FAF8F5',
+              border: '#E2E8F0',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #FAF8F5; color: #2D3748; }
+    h1, h2, h3, h4, .font-heading { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
+</head>
+<body class="min-h-full bg-[#FAF8F5] text-slate-800 flex flex-col antialiased">
+
+  <!-- Top Navigation Bar (Frontend Navbar Match) -->
+  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-40 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo & Brand (Real Transparent Logo) -->
+        <div class="flex items-center gap-8">
+          <a href="index.php" class="flex items-center group">
+            <img
+              src="/images/truevolt-logo-transparent.png"
+              alt="TrueVolt Systems Ltd"
+              class="h-10 sm:h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]"
+              onerror="this.onerror=null; this.src='../images/truevolt-logo-transparent.png';"
+            >
+          </a>
+
+          <!-- Main Desktop Navigation Tabs -->
+          <nav class="hidden md:flex items-center gap-1">
+            <a
+              href="index.php"
+              class="px-3.5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors <?= $currentPage === 'index.php' ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' ?>"
+            >
+              Dashboard
+            </a>
+            <a
+              href="projects.php"
+              class="px-3.5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors <?= in_array($currentPage, ['projects.php', 'project-form.php']) ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' ?>"
+            >
+              Projects &amp; Portfolio
+            </a>
+            <a
+              href="site-content.php"
+              class="px-3.5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors <?= $currentPage === 'site-content.php' ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' ?>"
+            >
+              Homepage Content
+            </a>
+            <a
+              href="inquiries.php"
+              class="px-3.5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors relative <?= $currentPage === 'inquiries.php' ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' ?>"
+            >
+              Inquiries
+              <?php if ($unreadInquiriesCount > 0): ?>
+                <span class="ml-1.5 px-1.5 py-0.2 rounded-full bg-[#F7941D] text-white text-[10px] font-bold">
+                  <?= $unreadInquiriesCount ?>
+                </span>
+              <?php endif; ?>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Right Side Actions: Desktop & Mobile Controls -->
+        <div class="flex items-center gap-2.5 sm:gap-4">
+          
+          <a
+            href="project-form.php"
+            class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#2854A6] hover:bg-[#1E4388] text-white font-semibold text-xs tracking-wider uppercase shadow-xs transition-colors"
+          >
+            <span class="text-[#F7941D] text-sm leading-none font-bold">+</span>
+            <span>New Project</span>
+          </a>
+
+          <a
+            href="http://localhost:3000"
+            target="_blank"
+            class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-200 text-xs font-semibold text-slate-600 hover:text-[#2854A6] hover:border-[#2854A6] transition-colors"
+          >
+            <span>Live Site</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+
+          <!-- User Menu (Desktop) -->
+          <div class="hidden md:flex items-center gap-3 pl-3 sm:pl-4 border-l border-slate-200">
+            <div class="text-right">
+              <p class="text-xs font-bold text-slate-900 leading-tight"><?= htmlspecialchars($admin['full_name'] ?? 'Administrator') ?></p>
+              <p class="text-[11px] text-slate-400">@<?= htmlspecialchars($admin['username'] ?? 'admin') ?></p>
+            </div>
+            <a
+              href="logout.php"
+              title="Sign Out"
+              class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+            </a>
+          </div>
+
+          <!-- Mobile Hamburger Menu Button -->
+          <button
+            id="mobileMenuToggleBtn"
+            type="button"
+            class="md:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors border border-slate-200"
+            aria-label="Toggle Navigation Menu"
+          >
+            <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenuDrawer" class="hidden md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 shadow-lg transition-all">
+      <nav class="space-y-1">
+        <a
+          href="index.php"
+          class="flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-colors <?= $currentPage === 'index.php' ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-700 hover:bg-slate-50' ?>"
+        >
+          <span>Dashboard</span>
+          <span class="text-xs text-slate-400">&rarr;</span>
+        </a>
+
+        <a
+          href="projects.php"
+          class="flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-colors <?= in_array($currentPage, ['projects.php', 'project-form.php']) ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-700 hover:bg-slate-50' ?>"
+        >
+          <span>Projects &amp; Portfolio</span>
+          <span class="text-xs text-slate-400">&rarr;</span>
+        <a
+          href="site-content.php"
+          class="flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-colors <?= $currentPage === 'site-content.php' ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-700 hover:bg-slate-50' ?>"
+        >
+          <span>Homepage Content</span>
+          <span class="text-xs text-slate-400">&rarr;</span>
+        </a>
+
+        <a
+          href="inquiries.php"
+          class="flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-colors <?= $currentPage === 'inquiries.php' ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-700 hover:bg-slate-50' ?>"
+        >
+          <span>Client Inquiries</span>
+          <?php if ($unreadInquiriesCount > 0): ?>
+            <span class="px-2 py-0.5 rounded-full bg-[#F7941D] text-white text-xs font-bold">
+              <?= $unreadInquiriesCount ?> New
+            </span>
+          <?php else: ?>
+            <span class="text-xs text-slate-400">&rarr;</span>
+          <?php endif; ?>
+        </a>
+
+        <a
+          href="project-form.php"
+          class="flex items-center gap-2 px-3.5 py-2.5 rounded-lg text-sm font-semibold text-[#2854A6] bg-blue-50/70 hover:bg-blue-50 transition-colors mt-2"
+        >
+          <span class="text-[#F7941D] font-bold text-base leading-none">+</span>
+          <span>Add New Project</span>
+        </a>
+
+        <a
+          href="http://localhost:3000"
+          target="_blank"
+          class="flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+        >
+          <span>Open Live Site</span>
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+
+        <div class="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between px-3.5">
+          <div>
+            <p class="text-xs font-bold text-slate-900"><?= htmlspecialchars($admin['full_name'] ?? 'Administrator') ?></p>
+            <p class="text-[11px] text-slate-400">@<?= htmlspecialchars($admin['username'] ?? 'admin') ?></p>
+          </div>
+          <a
+            href="logout.php"
+            class="text-xs font-semibold text-red-600 hover:underline px-2.5 py-1.5 rounded-lg bg-red-50"
+          >
+            Sign Out
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <script>
+    const toggleBtn = document.getElementById('mobileMenuToggleBtn');
+    const drawer = document.getElementById('mobileMenuDrawer');
+    const iconOpen = document.getElementById('menuIconOpen');
+    const iconClose = document.getElementById('menuIconClose');
+
+    if (toggleBtn && drawer) {
+      toggleBtn.addEventListener('click', () => {
+        const isHidden = drawer.classList.contains('hidden');
+        if (isHidden) {
+          drawer.classList.remove('hidden');
+          iconOpen.classList.add('hidden');
+          iconClose.classList.remove('hidden');
+        } else {
+          drawer.classList.add('hidden');
+          iconOpen.classList.remove('hidden');
+          iconClose.classList.add('hidden');
+        }
+      });
+    }
+  </script>
+
+  <!-- Main Viewport Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+
+    <!-- Flash Alerts -->
+    <?php if (!empty($_SESSION['flash_success'])): ?>
+      <div class="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex items-center justify-between shadow-xs">
+        <div class="flex items-center gap-2.5">
+          <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="font-medium"><?= htmlspecialchars($_SESSION['flash_success']) ?></span>
+        </div>
+        <button onclick="this.parentElement.remove()" class="text-emerald-500 hover:text-emerald-800 text-lg leading-none">&times;</button>
+      </div>
+      <?php unset($_SESSION['flash_success']); ?>
+    <?php endif; ?>
+
+    <?php if (!empty($_SESSION['flash_error'])): ?>
+      <div class="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-sm flex items-center justify-between shadow-xs">
+        <div class="flex items-center gap-2.5">
+          <svg class="w-5 h-5 text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="font-medium"><?= htmlspecialchars($_SESSION['flash_error']) ?></span>
+        </div>
+        <button onclick="this.parentElement.remove()" class="text-rose-500 hover:text-rose-800 text-lg leading-none">&times;</button>
+      </div>
+      <?php unset($_SESSION['flash_error']); ?>
+    <?php endif; ?>

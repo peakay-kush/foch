@@ -1,4 +1,8 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { Project, fetchProjects, STATIC_FEATURED_PROJECTS, resolveImageUrl } from "@/lib/api";
 
 const categoryBadge: Record<string, { bg: string; text: string }> = {
   Solar: { bg: "bg-brand-blue", text: "text-white" },
@@ -21,12 +25,13 @@ function ProjectCard({
   title: string;
   location: string;
   year: string;
-  refNum: number;
+  refNum?: number | null;
   aspect?: string;
   className?: string;
   imageSrc?: string;
 }) {
   const badge = categoryBadge[category] ?? { bg: "bg-brand-blue", text: "text-white" };
+  const resolvedSrc = resolveImageUrl(imageSrc || "");
 
   return (
     <div className={`group cursor-pointer ${className}`}>
@@ -35,10 +40,10 @@ function ProjectCard({
         <div
           className={`relative w-full ${aspect} flex-grow overflow-hidden bg-slate-900`}
         >
-          {imageSrc ? (
+          {resolvedSrc ? (
             <>
               <Image
-                src={imageSrc}
+                src={resolvedSrc}
                 alt={title}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -50,9 +55,11 @@ function ProjectCard({
             <div className="img-placeholder w-full h-full flex items-center justify-center">
               <div className="text-center p-4">
                 <span className="block font-semibold">{category} System</span>
-                <span className="text-[0.6rem] text-text-muted mt-1 block">
-                  Project Reference #{refNum}
-                </span>
+                {refNum && (
+                  <span className="text-[0.6rem] text-text-muted mt-1 block">
+                    Project Reference #{refNum}
+                  </span>
+                )}
               </div>
             </div>
           )}
@@ -83,6 +90,23 @@ function ProjectCard({
 
 /* ── Main Section ──────────────────────────────────────────── */
 export default function Projects() {
+  const [projectsList, setProjectsList] = useState<Project[]>(STATIC_FEATURED_PROJECTS);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchProjects({ featured: true }).then((data) => {
+      if (isMounted && data && data.length > 0) {
+        setProjectsList(data);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // Safe accessor to handle dynamic lists from CMS
+  const p = (index: number, fallback: Project) => projectsList[index] || fallback;
+
   return (
     <section id="projects" className="section-padding bg-warm-dark">
       <div className="container-custom">
@@ -106,46 +130,48 @@ export default function Projects() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5">
           {/* Tall card — left */}
           <ProjectCard
-            category="Solar"
-            title="Greenfield Estate — 12kW Hybrid Inverter & Storage Bank"
-            location="Karen, Nairobi"
-            year="2024"
-            refNum={101}
-            aspect="aspect-[3/4]"
+            category={p(0, STATIC_FEATURED_PROJECTS[0]).category}
+            title={p(0, STATIC_FEATURED_PROJECTS[0]).title}
+            location={p(0, STATIC_FEATURED_PROJECTS[0]).location}
+            year={p(0, STATIC_FEATURED_PROJECTS[0]).year}
+            refNum={p(0, STATIC_FEATURED_PROJECTS[0]).refNum}
+            aspect={p(0, STATIC_FEATURED_PROJECTS[0]).aspect || "aspect-[3/4]"}
             className="lg:row-span-2"
-            imageSrc="/images/projects/solar-hybrid-inverter.jpeg"
+            imageSrc={p(0, STATIC_FEATURED_PROJECTS[0]).image || p(0, STATIC_FEATURED_PROJECTS[0]).imageSrc}
           />
 
           {/* Normal — top middle */}
           <ProjectCard
-            category="Electrical"
-            title="Woodlands Office Park — Complete DB & Wiring Retrofit"
-            location="Westlands, Nairobi"
-            year="2024"
-            refNum={102}
-            imageSrc="/images/projects/electrical-commercial-db.jpeg"
+            category={p(1, STATIC_FEATURED_PROJECTS[1]).category}
+            title={p(1, STATIC_FEATURED_PROJECTS[1]).title}
+            location={p(1, STATIC_FEATURED_PROJECTS[1]).location}
+            year={p(1, STATIC_FEATURED_PROJECTS[1]).year}
+            refNum={p(1, STATIC_FEATURED_PROJECTS[1]).refNum}
+            aspect={p(1, STATIC_FEATURED_PROJECTS[1]).aspect || "aspect-[4/3]"}
+            imageSrc={p(1, STATIC_FEATURED_PROJECTS[1]).image || p(1, STATIC_FEATURED_PROJECTS[1]).imageSrc}
           />
 
           {/* Normal — top right */}
           <ProjectCard
-            category="Security"
-            title="Riverside Corporate — 64-Channel IP CCTV & Access"
-            location="Riverside, Nairobi"
-            year="2023"
-            refNum={103}
-            imageSrc="/images/projects/security-cctv-surveillance.jpeg"
+            category={p(2, STATIC_FEATURED_PROJECTS[2]).category}
+            title={p(2, STATIC_FEATURED_PROJECTS[2]).title}
+            location={p(2, STATIC_FEATURED_PROJECTS[2]).location}
+            year={p(2, STATIC_FEATURED_PROJECTS[2]).year}
+            refNum={p(2, STATIC_FEATURED_PROJECTS[2]).refNum}
+            aspect={p(2, STATIC_FEATURED_PROJECTS[2]).aspect || "aspect-[4/3]"}
+            imageSrc={p(2, STATIC_FEATURED_PROJECTS[2]).image || p(2, STATIC_FEATURED_PROJECTS[2]).imageSrc}
           />
 
           {/* Wide card — spans middle + right under the two normals */}
           <ProjectCard
-            category="Solar"
-            title="Hazelwood Agri-Hub — 25kW Waterfront Solar Array"
-            location="Naivasha"
-            year="2024"
-            refNum={104}
-            aspect="aspect-[16/7]"
+            category={p(3, STATIC_FEATURED_PROJECTS[3]).category}
+            title={p(3, STATIC_FEATURED_PROJECTS[3]).title}
+            location={p(3, STATIC_FEATURED_PROJECTS[3]).location}
+            year={p(3, STATIC_FEATURED_PROJECTS[3]).year}
+            refNum={p(3, STATIC_FEATURED_PROJECTS[3]).refNum}
+            aspect={p(3, STATIC_FEATURED_PROJECTS[3]).aspect || "aspect-[16/7]"}
             className="lg:col-span-2"
-            imageSrc="/images/projects/solar-waterfront-array.jpeg"
+            imageSrc={p(3, STATIC_FEATURED_PROJECTS[3]).image || p(3, STATIC_FEATURED_PROJECTS[3]).imageSrc}
           />
         </div>
 
@@ -154,48 +180,68 @@ export default function Projects() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           {/* Normal — top left */}
           <ProjectCard
-            category="Electrical"
-            title="Sunset Ridge Estate — Precision Electrical & Lighting Retrofit"
-            location="Upper Hill, Nairobi"
-            year="2023"
-            refNum={105}
-            imageSrc="/images/projects/electrical-specialist-wiring.jpeg"
+            category={p(4, STATIC_FEATURED_PROJECTS[4]).category}
+            title={p(4, STATIC_FEATURED_PROJECTS[4]).title}
+            location={p(4, STATIC_FEATURED_PROJECTS[4]).location}
+            year={p(4, STATIC_FEATURED_PROJECTS[4]).year}
+            refNum={p(4, STATIC_FEATURED_PROJECTS[4]).refNum}
+            aspect={p(4, STATIC_FEATURED_PROJECTS[4]).aspect || "aspect-[4/3]"}
+            imageSrc={p(4, STATIC_FEATURED_PROJECTS[4]).image || p(4, STATIC_FEATURED_PROJECTS[4]).imageSrc}
           />
 
           {/* Normal — top middle */}
           <ProjectCard
-            category="Solar"
-            title="Kiambu Commercial Farm — 50kW Rooftop PV Array"
-            location="Kiambu"
-            year="2024"
-            refNum={106}
-            imageSrc="/images/projects/solar-rooftop-array.jpeg"
+            category={p(5, STATIC_FEATURED_PROJECTS[5]).category}
+            title={p(5, STATIC_FEATURED_PROJECTS[5]).title}
+            location={p(5, STATIC_FEATURED_PROJECTS[5]).location}
+            year={p(5, STATIC_FEATURED_PROJECTS[5]).year}
+            refNum={p(5, STATIC_FEATURED_PROJECTS[5]).refNum}
+            aspect={p(5, STATIC_FEATURED_PROJECTS[5]).aspect || "aspect-[4/3]"}
+            imageSrc={p(5, STATIC_FEATURED_PROJECTS[5]).image || p(5, STATIC_FEATURED_PROJECTS[5]).imageSrc}
           />
 
           {/* Tall card — right, spans 2 sub-rows */}
           <ProjectCard
-            category="Security"
-            title="Thornhill Executive Compound — Perimeter Protection"
-            location="Runda, Nairobi"
-            year="2024"
-            refNum={107}
-            aspect="aspect-[3/4]"
+            category={p(6, STATIC_FEATURED_PROJECTS[6]).category}
+            title={p(6, STATIC_FEATURED_PROJECTS[6]).title}
+            location={p(6, STATIC_FEATURED_PROJECTS[6]).location}
+            year={p(6, STATIC_FEATURED_PROJECTS[6]).year}
+            refNum={p(6, STATIC_FEATURED_PROJECTS[6]).refNum}
+            aspect={p(6, STATIC_FEATURED_PROJECTS[6]).aspect || "aspect-[3/4]"}
             className="lg:row-span-2"
-            imageSrc="/images/projects/security-perimeter-protection.jpeg"
+            imageSrc={p(6, STATIC_FEATURED_PROJECTS[6]).image || p(6, STATIC_FEATURED_PROJECTS[6]).imageSrc}
           />
 
           {/* Wide card — spans left + middle under the two normals */}
           <ProjectCard
-            category="Electrical"
-            title="Waterfall Business District — Multi-Tier Electrical Infrastructure"
-            location="Industrial Area, Nairobi"
-            year="2024"
-            refNum={108}
-            aspect="aspect-[16/7]"
+            category={p(7, STATIC_FEATURED_PROJECTS[7]).category}
+            title={p(7, STATIC_FEATURED_PROJECTS[7]).title}
+            location={p(7, STATIC_FEATURED_PROJECTS[7]).location}
+            year={p(7, STATIC_FEATURED_PROJECTS[7]).year}
+            refNum={p(7, STATIC_FEATURED_PROJECTS[7]).refNum}
+            aspect={p(7, STATIC_FEATURED_PROJECTS[7]).aspect || "aspect-[16/7]"}
             className="lg:col-span-2"
-            imageSrc="/images/projects/electrical-commercial-complex.jpeg"
+            imageSrc={p(7, STATIC_FEATURED_PROJECTS[7]).image || p(7, STATIC_FEATURED_PROJECTS[7]).imageSrc}
           />
         </div>
+
+        {/* Additional Projects (if more than 8 exist in DB) */}
+        {projectsList.length > 8 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
+            {projectsList.slice(8).map((proj) => (
+              <ProjectCard
+                key={proj.id}
+                category={proj.category}
+                title={proj.title}
+                location={proj.location}
+                year={proj.year}
+                refNum={proj.refNum}
+                aspect={proj.aspect || "aspect-[4/3]"}
+                imageSrc={proj.image || proj.imageSrc}
+              />
+            ))}
+          </div>
+        )}
 
         {/* CTA */}
         <div className="text-center mt-14">
@@ -219,4 +265,3 @@ export default function Projects() {
     </section>
   );
 }
-

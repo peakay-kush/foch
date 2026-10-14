@@ -3,51 +3,14 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
+import ServiceProjectsGrid from "@/components/ServiceProjectsGrid";
+import { STATIC_ELECTRICAL_PROJECTS } from "@/lib/api";
 
 export const metadata = {
   title: "Electrical Contracting — TrueVolt Systems | NCA Certified Electrical Contractor Kenya",
   description:
     "TrueVolt Systems provides NCA-registered and EPRA-licensed electrical contracting services across Kenya. Commercial power reticulation, switchboards, wiring, generator integration, and architectural lighting in Nairobi and nationwide.",
 };
-
-const projects = [
-  {
-    title: "Westlands Office Park — Complete Main Distribution Board Retrofit",
-    location: "Westlands, Nairobi",
-    year: "2025",
-    image: "/images/projects/electrical-commercial-db.jpeg",
-    description:
-      "Full replacement and upgrade of ageing main distribution boards across a 6-storey commercial office block, including three-phase bus-bar systems, surge protection, and earth leakage units.",
-    specs: ["3-Phase MDB Upgrade", "Surge Protection", "Earth Leakage Units", "KPLC Compliance"],
-  },
-  {
-    title: "Industrial Area Complex — Multi-Tier Electrical Infrastructure",
-    location: "Industrial Area, Nairobi",
-    year: "2025",
-    image: "/images/projects/electrical-commercial-complex.jpeg",
-    description:
-      "Large-scale commercial electrical fit-out across a multi-storey development — cable tray reticulation, sub-distribution boards, generator changeover switches, and power factor correction.",
-    specs: ["Cable Tray Reticulation", "Sub-DB Installation", "Generator Changeover", "Power Factor Correction"],
-  },
-  {
-    title: "Karen Residence — Precision Chandelier & Architectural Wiring",
-    location: "Karen, Nairobi",
-    year: "2025",
-    image: "/images/projects/electrical-specialist-wiring.jpeg",
-    description:
-      "Specialist electrical wiring for luxury residential lighting — including heavy chandelier mounting, dimmer circuit integration, and concealed conduit runs in plastered ceilings.",
-    specs: ["Chandelier Mounting", "Dimmer Circuits", "Concealed Conduit", "Premium Finishes"],
-  },
-  {
-    title: "Kilimani Apartments — Modern Geometric LED Ceiling Lighting",
-    location: "Kilimani, Nairobi",
-    year: "2024",
-    image: "/images/projects/electrical-modern-lighting.jpeg",
-    description:
-      "Contemporary architectural LED lighting installation featuring geometric gypsum ceiling designs with integrated strip lighting, downlights, and smart control systems.",
-    specs: ["LED Strip Integration", "Gypsum Ceiling Design", "Smart Controls", "Energy Efficient"],
-  },
-];
 
 const services = [
   {
@@ -290,65 +253,12 @@ export default function ElectricalPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project, i) => (
-              <div
-                key={i}
-                className="bg-white border border-border rounded-xl overflow-hidden shadow-xs hover:border-brand-blue hover:shadow-xl transition-all duration-300 flex flex-col group"
-              >
-                <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                  <div className="absolute bottom-3 left-3 z-10">
-                    <span className="bg-brand-blue text-white text-[0.62rem] font-bold uppercase tracking-widest px-2.5 py-1 rounded">
-                      Electrical
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-6 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-[1.02rem] font-bold text-slate-900 mb-2 leading-snug group-hover:text-brand-blue transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                      {project.description}
-                    </p>
-                  </div>
-
-                  <div>
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {project.specs.map((spec) => (
-                        <span
-                          key={spec}
-                          className="px-2 py-0.5 bg-slate-100 rounded text-slate-700 text-[0.66rem] font-medium"
-                        >
-                          {spec}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center justify-between text-[0.74rem] text-slate-500 pt-3 border-t border-slate-100">
-                      <span className="font-medium text-slate-700 flex items-center gap-1.5">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-brand-orange">
-                          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
-                          <circle cx="12" cy="9" r="2.5" />
-                        </svg>
-                        {project.location}
-                      </span>
-                      <span className="font-mono text-slate-400">{project.year}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ServiceProjectsGrid
+            category="Electrical"
+            badgeLabel="Electrical"
+            badgeBg="bg-brand-blue"
+            fallbackProjects={STATIC_ELECTRICAL_PROJECTS}
+          />
         </div>
       </section>
 

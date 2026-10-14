@@ -3,51 +3,14 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
+import ServiceProjectsGrid from "@/components/ServiceProjectsGrid";
+import { STATIC_SECURITY_PROJECTS } from "@/lib/api";
 
 export const metadata = {
   title: "Security Systems — TrueVolt Systems | CCTV, Electric Fencing & Access Control Kenya",
   description:
     "TrueVolt Systems delivers integrated security engineering across Kenya. 4K IP CCTV surveillance, electric fencing, biometric access control, razor wire, gate automation, and solar-backed zero-downtime security systems in Nairobi and nationwide.",
 };
-
-const projects = [
-  {
-    title: "Riverside Corporate Campus — 64-Channel 4K IP CCTV Command Centre",
-    location: "Riverside, Nairobi",
-    year: "2025",
-    image: "/images/projects/security-cctv-surveillance.jpeg",
-    description:
-      "Enterprise-grade 64-channel Dahua IP surveillance deployment with dedicated multi-screen monitoring command centre, AI-powered motion detection, and 30-day on-site NVR recording with cloud backup.",
-    specs: ["64-Channel 4K CCTV", "Dahua NVR System", "AI Motion Detection", "30-Day Recording"],
-  },
-  {
-    title: "Runda Executive Compound — Reinforced Perimeter Razor Wire Defence",
-    location: "Runda, Nairobi",
-    year: "2025",
-    image: "/images/projects/security-perimeter-protection.jpeg",
-    description:
-      "High-security perimeter fortification featuring reinforced concrete wall-top razor wire coils, anti-climb measures, and integrated flood lighting for a diplomatic residential compound.",
-    specs: ["Razor Wire Coils", "Anti-Climb Barriers", "Flood Lighting", "Perimeter Detection"],
-  },
-  {
-    title: "Karen Executive Estate — Integrated Dusk Illumination & Perimeter Security",
-    location: "Karen, Nairobi",
-    year: "2025",
-    image: "/images/projects/hero-showcase.jpeg",
-    description:
-      "Complete estate security integration — perimeter CCTV coverage, motion-activated flood lighting, electric fencing with zone monitoring, and solar-backed UPS ensuring zero-downtime operation during power outages.",
-    specs: ["Estate Integration", "Motion Lighting", "Electric Fencing", "Solar UPS Backup"],
-  },
-  {
-    title: "Muthaiga Residence — Premium Estate Exterior Security & Lighting",
-    location: "Muthaiga, Nairobi",
-    year: "2024",
-    image: "/images/projects/residential-executive-estate.jpeg",
-    description:
-      "Luxury residential security deployment featuring discreet IP camera placement, architectural security lighting, smart gate automation with intercom, and remote smartphone monitoring.",
-    specs: ["Discreet IP Cameras", "Gate Automation", "Intercom System", "Remote Monitoring"],
-  },
-];
 
 const capabilities = [
   {
@@ -292,65 +255,12 @@ export default function SecurityPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project, i) => (
-              <div
-                key={i}
-                className="bg-white border border-border rounded-xl overflow-hidden shadow-xs hover:border-brand-blue hover:shadow-xl transition-all duration-300 flex flex-col group"
-              >
-                <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                  <div className="absolute bottom-3 left-3 z-10">
-                    <span className="bg-brand-blue text-white text-[0.62rem] font-bold uppercase tracking-widest px-2.5 py-1 rounded">
-                      Security
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-6 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-[1.02rem] font-bold text-slate-900 mb-2 leading-snug group-hover:text-brand-blue transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                      {project.description}
-                    </p>
-                  </div>
-
-                  <div>
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {project.specs.map((spec) => (
-                        <span
-                          key={spec}
-                          className="px-2 py-0.5 bg-slate-100 rounded text-slate-700 text-[0.66rem] font-medium"
-                        >
-                          {spec}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center justify-between text-[0.74rem] text-slate-500 pt-3 border-t border-slate-100">
-                      <span className="font-medium text-slate-700 flex items-center gap-1.5">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-brand-orange">
-                          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
-                          <circle cx="12" cy="9" r="2.5" />
-                        </svg>
-                        {project.location}
-                      </span>
-                      <span className="font-mono text-slate-400">{project.year}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ServiceProjectsGrid
+            category="Security"
+            badgeLabel="Security"
+            badgeBg="bg-slate-900"
+            fallbackProjects={STATIC_SECURITY_PROJECTS}
+          />
         </div>
       </section>
 

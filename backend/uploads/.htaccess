@@ -1,0 +1,18 @@
+# Disable PHP script execution in uploads directory
+<FilesMatch "(?i)\.(php|php3|php4|php5|phtml|pl|py|cgi)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Allow public read access to static media assets
+<FilesMatch "(?i)\.(jpg|jpeg|png|gif|webp|svg|ico|pdf|avif)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Enable CORS for media assets
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, OPTIONS"
+    Header set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept"
+</IfModule>

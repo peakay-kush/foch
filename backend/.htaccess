@@ -1,0 +1,22 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Redirect root of backend to admin portal
+    RewriteRule ^$ admin/ [R=301,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+    # Global CORS headers for API and assets
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+</IfModule>
+
+# Prevent directory indexing
+Options -Indexes
+
+# Deny direct access to sensitive files
+<FilesMatch "^\.env|\.sql$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

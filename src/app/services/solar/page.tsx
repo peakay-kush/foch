@@ -4,68 +4,14 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
 
+import ServiceProjectsGrid from "@/components/ServiceProjectsGrid";
+import { STATIC_SOLAR_PROJECTS } from "@/lib/api";
+
 export const metadata = {
   title: "Solar Installations — TrueVolt Systems | EPRA Licensed Solar Contractor Kenya",
   description:
     "TrueVolt Systems delivers custom-engineered solar PV installations, hybrid inverter systems, and high-capacity lithium storage across Kenya. EPRA licensed solar contractor serving Nairobi, Naivasha, Mombasa and beyond.",
 };
-
-const projects = [
-  {
-    title: "Karen Executive Residence — 12kW Hybrid Inverter & LiFePO4 Storage",
-    location: "Karen, Nairobi",
-    year: "2025",
-    image: "/images/projects/solar-hybrid-inverter.jpeg",
-    description:
-      "Complete off-grid-ready hybrid solar system featuring dual Deye 8kW inverters, 20kWh lithium iron phosphate battery bank, and smart mobile monitoring for real-time energy management.",
-    specs: ["12kW PV Capacity", "20kWh LiFePO4 Storage", "Deye Hybrid Inverters", "IoT Monitoring"],
-  },
-  {
-    title: "Lake Naivasha Agri-Hub — 25kW Waterfront Ground-Mount Array",
-    location: "Naivasha, Rift Valley",
-    year: "2025",
-    image: "/images/projects/solar-waterfront-array.jpeg",
-    description:
-      "Large-scale agricultural ground-mounted solar array engineered for irrigation pump stations and cold storage facilities, reducing diesel generator dependence by over 90%.",
-    specs: ["25kW Ground Array", "Tier-1 Mono PERC Panels", "Agricultural Net-Metering", "Pump Integration"],
-  },
-  {
-    title: "Westlands Commercial Complex — 50kW Rooftop PV Array",
-    location: "Westlands, Nairobi",
-    year: "2025",
-    image: "/images/projects/solar-rooftop-array.jpeg",
-    description:
-      "High-performance commercial rooftop installation across 400m² of flat-roof space, engineered for maximum yield with tilt-optimized racking and KPLC grid-tie compliance.",
-    specs: ["50kW Rooftop PV", "Grid-Tie Compliant", "Tilt-Optimized Racking", "25yr Panel Warranty"],
-  },
-  {
-    title: "Elevated Tower-Mount PV Structure — Rural Off-Grid System",
-    location: "Nanyuki, Laikipia",
-    year: "2024",
-    image: "/images/projects/solar-tower-structure.jpeg",
-    description:
-      "Custom-fabricated elevated solar tower designed for areas with limited roof space or shading challenges, providing unobstructed sun exposure for maximum energy harvest.",
-    specs: ["Elevated Tower Mount", "Anti-Shading Design", "Off-Grid Configuration", "Steel Fabrication"],
-  },
-  {
-    title: "4-Tier High-Capacity Lithium Storage Rack — Battery Installation",
-    location: "Runda, Nairobi",
-    year: "2025",
-    image: "/images/projects/solar-lithium-rack.jpeg",
-    description:
-      "Enterprise-grade LiFePO4 battery storage installation with 4-tier rack system providing 48kWh total capacity for uninterrupted backup during extended KPLC outages.",
-    specs: ["48kWh Total Capacity", "LiFePO4 Chemistry", "4-Tier Rack System", "10yr Battery Warranty"],
-  },
-  {
-    title: "Certified Technician Roof Deployment — Residential PV Installation",
-    location: "Lavington, Nairobi",
-    year: "2025",
-    image: "/images/projects/solar-panel-installation.jpeg",
-    description:
-      "Professional roof-mounted solar panel installation by EPRA-certified technicians with full structural assessment, waterproofing integrity, and optimized panel orientation.",
-    specs: ["Roof Structural Assessment", "EPRA Certified Team", "Waterproof Mounting", "Optimal Orientation"],
-  },
-];
 
 const capabilities = [
   {
@@ -311,65 +257,12 @@ export default function SolarPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-            {projects.map((project, i) => (
-              <div
-                key={i}
-                className="bg-white border border-border rounded-xl overflow-hidden shadow-xs hover:border-brand-blue hover:shadow-xl transition-all duration-300 flex flex-col group"
-              >
-                <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                  <div className="absolute bottom-3 left-3 z-10">
-                    <span className="bg-brand-blue text-white text-[0.62rem] font-bold uppercase tracking-widest px-2.5 py-1 rounded">
-                      Solar PV
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-6 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-[0.98rem] font-bold text-slate-900 mb-2 leading-snug group-hover:text-brand-blue transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                      {project.description}
-                    </p>
-                  </div>
-
-                  <div>
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {project.specs.map((spec) => (
-                        <span
-                          key={spec}
-                          className="px-2 py-0.5 bg-slate-100 rounded text-slate-700 text-[0.66rem] font-medium"
-                        >
-                          {spec}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center justify-between text-[0.74rem] text-slate-500 pt-3 border-t border-slate-100">
-                      <span className="font-medium text-slate-700 flex items-center gap-1.5">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-brand-orange">
-                          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
-                          <circle cx="12" cy="9" r="2.5" />
-                        </svg>
-                        {project.location}
-                      </span>
-                      <span className="font-mono text-slate-400">{project.year}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ServiceProjectsGrid
+            category="Solar"
+            badgeLabel="Solar PV"
+            badgeBg="bg-brand-blue"
+            fallbackProjects={STATIC_SOLAR_PROJECTS}
+          />
         </div>
       </section>
 
