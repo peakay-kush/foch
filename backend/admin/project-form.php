@@ -375,10 +375,10 @@ require_once __DIR__ . '/includes/header.php';
         <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
           <img
             id="imagePreview"
-            src="<?= htmlspecialchars(!empty($project['image']) ? $project['image'] : '/images/projects/solar-panel-installation.jpeg') ?>"
+            src="<?= htmlspecialchars(adminAssetUrl(!empty($project['image']) ? $project['image'] : null)) ?>"
             alt="Preview"
             class="w-full h-full object-cover"
-            onerror="this.src='/images/projects/solar-panel-installation.jpeg'"
+            onerror="this.onerror=null; this.src='../images/projects/solar-panel-installation.jpeg';"
           >
         </div>
       </div>

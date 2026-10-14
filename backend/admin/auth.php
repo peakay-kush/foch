@@ -76,3 +76,25 @@ function verifyCsrfToken(?string $token): bool {
     }
     return hash_equals($_SESSION['csrf_token'], $token);
 }
+
+/**
+ * Resolves an asset (image/upload) URL for the Admin portal so it works
+ * reliably whether the backend is hosted at the domain root, localhost,
+ * or any live subdirectory (e.g. https://yourdomain.com/backend/admin/).
+ */
+function adminAssetUrl(?string $path, string $fallback = '../images/projects/solar-panel-installation.jpeg'): string {
+    if (empty($path)) {
+        return $fallback;
+    }
+    // Full external URLs or data URIs remain untouched
+    if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://') || str_starts_with($path, 'data:')) {
+        return $path;
+    }
+    // Already relative to admin directory
+    if (str_starts_with($path, '../')) {
+        return $path;
+    }
+    // Strip any leading slash to avoid browser jumping to domain root on live subdirectory setups
+    $clean = ltrim($path, '/');
+    return '../' . $clean;
+}

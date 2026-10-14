@@ -225,10 +225,10 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="flex items-center gap-3.5">
                   <div class="w-16 h-12 rounded-lg overflow-hidden bg-slate-100 shrink-0 border border-slate-200">
                     <img
-                      src="<?= htmlspecialchars($p['image']) ?>"
+                      src="<?= htmlspecialchars(adminAssetUrl($p['image'])) ?>"
                       alt="<?= htmlspecialchars($p['title']) ?>"
                       class="w-full h-full object-cover"
-                      onerror="this.src='/images/projects/solar-panel-installation.jpeg'"
+                      onerror="this.onerror=null; this.src='../images/projects/solar-panel-installation.jpeg';"
                     >
                   </div>
                   <div>

@@ -230,10 +230,10 @@ require_once __DIR__ . '/includes/header.php';
         <div class="aspect-[4/3] rounded-xl overflow-hidden bg-slate-100 border border-slate-200 relative group">
           <img
             id="preview_hero_showcase_image"
-            src="<?= htmlspecialchars($content['hero_showcase_image'] ?? '/images/projects/hero-showcase.jpeg') ?>"
+            src="<?= htmlspecialchars(adminAssetUrl($content['hero_showcase_image'] ?? null, '../images/projects/hero-showcase.jpeg')) ?>"
             alt="Hero Preview"
             class="w-full h-full object-cover"
-            onerror="this.src='/images/projects/solar-panel-installation.jpeg'"
+            onerror="this.onerror=null; this.src='../images/projects/hero-showcase.jpeg';"
           >
         </div>
 
@@ -322,10 +322,10 @@ require_once __DIR__ . '/includes/header.php';
             <div class="aspect-[16/10] rounded-xl overflow-hidden bg-slate-100 border border-slate-200 mb-2">
               <img
                 id="preview_services_solar_image"
-                src="<?= htmlspecialchars($content['services_solar_image'] ?? '/images/projects/solar-panel-installation.jpeg') ?>"
+                src="<?= htmlspecialchars(adminAssetUrl($content['services_solar_image'] ?? null, '../images/projects/solar-panel-installation.jpeg')) ?>"
                 alt="Solar Preview"
                 class="w-full h-full object-cover"
-                onerror="this.src='/images/projects/solar-panel-installation.jpeg'"
+                onerror="this.onerror=null; this.src='../images/projects/solar-panel-installation.jpeg';"
               >
             </div>
 
@@ -419,10 +419,10 @@ require_once __DIR__ . '/includes/header.php';
             <div class="aspect-[16/10] rounded-xl overflow-hidden bg-slate-100 border border-slate-200 mb-2">
               <img
                 id="preview_services_electrical_image"
-                src="<?= htmlspecialchars($content['services_electrical_image'] ?? '/images/projects/electrical-modern-lighting.jpeg') ?>"
+                src="<?= htmlspecialchars(adminAssetUrl($content['services_electrical_image'] ?? null, '../images/projects/electrical-modern-lighting.jpeg')) ?>"
                 alt="Electrical Preview"
                 class="w-full h-full object-cover"
-                onerror="this.src='/images/projects/electrical-commercial-db.jpeg'"
+                onerror="this.onerror=null; this.src='../images/projects/electrical-commercial-db.jpeg';"
               >
             </div>
 
@@ -516,10 +516,10 @@ require_once __DIR__ . '/includes/header.php';
             <div class="aspect-[16/10] rounded-xl overflow-hidden bg-slate-100 border border-slate-200 mb-2">
               <img
                 id="preview_services_security_image"
-                src="<?= htmlspecialchars($content['services_security_image'] ?? '/images/projects/security-cctv-surveillance.jpeg') ?>"
+                src="<?= htmlspecialchars(adminAssetUrl($content['services_security_image'] ?? null, '../images/projects/security-cctv-surveillance.jpeg')) ?>"
                 alt="Security Preview"
                 class="w-full h-full object-cover"
-                onerror="this.src='/images/projects/security-perimeter-protection.jpeg'"
+                onerror="this.onerror=null; this.src='../images/projects/security-perimeter-protection.jpeg';"
               >
             </div>
 
