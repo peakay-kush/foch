@@ -37,103 +37,95 @@ try {
   <!-- Top Navigation Bar (Frontend Navbar Match) -->
   <header class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-40 shadow-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-20">
+      <div class="flex items-center justify-between h-16">
         
-        <!-- Logo & Brand (Real Transparent Logo) -->
-        <div class="flex items-center gap-8">
-          <a href="index.php" class="flex items-center group">
+        <!-- Logo & Navigation Links -->
+        <div class="flex items-center gap-6 lg:gap-8">
+          <a href="index.php" class="flex items-center group shrink-0">
             <img
               src="../images/truevolt-logo-transparent.png"
               alt="TrueVolt Systems Ltd"
-              class="h-10 sm:h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]"
+              class="h-9 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]"
               onerror="this.onerror=null; this.src='../images/truevolt-logo-transparent.png';"
             >
           </a>
 
           <!-- Main Desktop Navigation Tabs -->
-          <nav class="hidden md:flex items-center gap-1">
+          <nav class="hidden md:flex items-center gap-1.5">
             <a
               href="index.php"
-              class="px-3.5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors <?= $currentPage === 'index.php' ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' ?>"
+              class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors <?= $currentPage === 'index.php' ? 'bg-slate-100 text-[#2854A6] font-semibold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' ?>"
             >
               Dashboard
             </a>
             <a
               href="projects.php"
-              class="px-3.5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors <?= in_array($currentPage, ['projects.php', 'project-form.php']) ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' ?>"
+              class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors <?= in_array($currentPage, ['projects.php', 'project-form.php']) ? 'bg-slate-100 text-[#2854A6] font-semibold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' ?>"
             >
-              Projects &amp; Portfolio
+              Projects
             </a>
             <a
               href="site-content.php"
-              class="px-3.5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors <?= $currentPage === 'site-content.php' ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' ?>"
+              class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors <?= $currentPage === 'site-content.php' ? 'bg-slate-100 text-[#2854A6] font-semibold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' ?>"
             >
-              Homepage Content
+              Content
             </a>
             <a
               href="inquiries.php"
-              class="px-3.5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors relative <?= $currentPage === 'inquiries.php' ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' ?>"
+              class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors relative inline-flex items-center gap-1.5 <?= $currentPage === 'inquiries.php' ? 'bg-slate-100 text-[#2854A6] font-semibold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' ?>"
             >
-              Inquiries
+              <span>Inquiries</span>
               <?php if ($unreadInquiriesCount > 0): ?>
-                <span class="ml-1.5 px-1.5 py-0.2 rounded-full bg-[#F7941D] text-white text-[10px] font-bold">
+                <span class="px-1.5 py-0.5 rounded-full bg-[#F7941D] text-white text-[10px] font-bold leading-none">
                   <?= $unreadInquiriesCount ?>
                 </span>
               <?php endif; ?>
             </a>
             <a
               href="settings.php"
-              class="px-3.5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors <?= $currentPage === 'settings.php' ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' ?>"
+              class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors <?= $currentPage === 'settings.php' ? 'bg-slate-100 text-[#2854A6] font-semibold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' ?>"
             >
               Settings
             </a>
           </nav>
         </div>
 
-        <!-- Right Side Actions: Desktop & Mobile Controls -->
-        <div class="flex items-center gap-2.5 sm:gap-4">
+        <!-- Right Side Controls -->
+        <div class="flex items-center gap-3">
           
-          <a
-            href="project-form.php"
-            class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#2854A6] hover:bg-[#1E4388] text-white font-semibold text-xs tracking-wider uppercase shadow-xs transition-colors"
-          >
-            <span class="text-[#F7941D] text-sm leading-none font-bold">+</span>
-            <span>New Project</span>
-          </a>
-
           <a
             href="http://localhost:3000"
             target="_blank"
-            class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-200 text-xs font-semibold text-slate-600 hover:text-[#2854A6] hover:border-[#2854A6] transition-colors"
+            class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-500 hover:text-[#2854A6] hover:bg-slate-50 transition-colors"
+            title="View Live Website"
           >
             <span>Live Site</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
           </a>
 
           <!-- User Menu (Desktop) -->
-          <div class="hidden md:flex items-center gap-2 pl-3 sm:pl-4 border-l border-slate-200">
-            <a href="settings.php" class="text-right group block">
-              <p class="text-xs font-bold text-slate-900 group-hover:text-[#2854A6] transition-colors leading-tight"><?= htmlspecialchars($admin['full_name'] ?? 'Administrator') ?></p>
-              <p class="text-[11px] text-slate-400">@<?= htmlspecialchars($admin['username'] ?? 'admin') ?></p>
-            </a>
+          <div class="hidden md:flex items-center gap-2 pl-3 border-l border-slate-200">
             <a
               href="settings.php"
+              class="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg hover:bg-slate-50 transition-colors group"
               title="Account & Password Settings"
-              class="p-2 text-slate-400 hover:text-[#2854A6] hover:bg-blue-50 rounded-lg transition-colors <?= $currentPage === 'settings.php' ? 'text-[#2854A6] bg-blue-50' : '' ?>"
             >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
+              <div class="w-6 h-6 rounded-full bg-blue-50 text-[#2854A6] font-bold text-[11px] flex items-center justify-center border border-blue-200 group-hover:bg-[#2854A6] group-hover:text-white transition-colors">
+                <?= strtoupper(substr($admin['username'] ?? 'A', 0, 1)) ?>
+              </div>
+              <span class="text-xs font-medium text-slate-700 group-hover:text-slate-900">
+                @<?= htmlspecialchars($admin['username'] ?? 'admin') ?>
+              </span>
             </a>
+
             <a
               href="logout.php"
               title="Sign Out"
-              class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+              class="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
             >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>
             </a>
