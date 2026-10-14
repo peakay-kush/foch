@@ -152,79 +152,77 @@ try {
     </div>
 
     <!-- Mobile Navigation Drawer -->
-    <div id="mobileMenuDrawer" class="hidden md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 shadow-lg transition-all">
+    <div id="mobileMenuDrawer" class="hidden md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-5 shadow-lg transition-all">
       <nav class="space-y-1">
         <a
           href="index.php"
-          class="flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-colors <?= $currentPage === 'index.php' ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-700 hover:bg-slate-50' ?>"
+          class="flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-medium transition-colors <?= $currentPage === 'index.php' ? 'bg-slate-100 text-[#2854A6] font-semibold' : 'text-slate-700 hover:bg-slate-50' ?>"
         >
           <span>Dashboard</span>
-          <span class="text-xs text-slate-400">&rarr;</span>
+          <span class="text-[11px] text-slate-400">&rarr;</span>
         </a>
 
         <a
           href="projects.php"
-          class="flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-colors <?= in_array($currentPage, ['projects.php', 'project-form.php']) ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-700 hover:bg-slate-50' ?>"
+          class="flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-medium transition-colors <?= in_array($currentPage, ['projects.php', 'project-form.php']) ? 'bg-slate-100 text-[#2854A6] font-semibold' : 'text-slate-700 hover:bg-slate-50' ?>"
         >
-          <span>Projects &amp; Portfolio</span>
-          <span class="text-xs text-slate-400">&rarr;</span>
+          <span>Projects</span>
+          <span class="text-[11px] text-slate-400">&rarr;</span>
+        </a>
+
         <a
           href="site-content.php"
-          class="flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-colors <?= $currentPage === 'site-content.php' ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-700 hover:bg-slate-50' ?>"
+          class="flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-medium transition-colors <?= $currentPage === 'site-content.php' ? 'bg-slate-100 text-[#2854A6] font-semibold' : 'text-slate-700 hover:bg-slate-50' ?>"
         >
-          <span>Homepage Content</span>
-          <span class="text-xs text-slate-400">&rarr;</span>
+          <span>Content</span>
+          <span class="text-[11px] text-slate-400">&rarr;</span>
         </a>
 
         <a
           href="inquiries.php"
-          class="flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-colors <?= $currentPage === 'inquiries.php' ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-700 hover:bg-slate-50' ?>"
+          class="flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-medium transition-colors <?= $currentPage === 'inquiries.php' ? 'bg-slate-100 text-[#2854A6] font-semibold' : 'text-slate-700 hover:bg-slate-50' ?>"
         >
-          <span>Client Inquiries</span>
+          <span>Inquiries</span>
           <?php if ($unreadInquiriesCount > 0): ?>
-            <span class="px-2 py-0.5 rounded-full bg-[#F7941D] text-white text-xs font-bold">
+            <span class="px-1.5 py-0.5 rounded-full bg-[#F7941D] text-white text-[10px] font-bold leading-none">
               <?= $unreadInquiriesCount ?> New
             </span>
           <?php else: ?>
-            <span class="text-xs text-slate-400">&rarr;</span>
+            <span class="text-[11px] text-slate-400">&rarr;</span>
           <?php endif; ?>
         </a>
 
         <a
           href="settings.php"
-          class="flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-colors <?= $currentPage === 'settings.php' ? 'bg-slate-100 text-[#2854A6]' : 'text-slate-700 hover:bg-slate-50' ?>"
+          class="flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-medium transition-colors <?= $currentPage === 'settings.php' ? 'bg-slate-100 text-[#2854A6] font-semibold' : 'text-slate-700 hover:bg-slate-50' ?>"
         >
-          <span>Account &amp; Password Settings</span>
-          <span class="text-xs text-slate-400">&rarr;</span>
-        </a>
-
-        <a
-          href="project-form.php"
-          class="flex items-center gap-2 px-3.5 py-2.5 rounded-lg text-sm font-semibold text-[#2854A6] bg-blue-50/70 hover:bg-blue-50 transition-colors mt-2"
-        >
-          <span class="text-[#F7941D] font-bold text-base leading-none">+</span>
-          <span>Add New Project</span>
+          <span>Settings</span>
+          <span class="text-[11px] text-slate-400">&rarr;</span>
         </a>
 
         <a
           href="http://localhost:3000"
           target="_blank"
-          class="flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+          class="flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors"
         >
-          <span>Open Live Site</span>
-          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <span>Live Site</span>
+          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
         </a>
 
-        <div class="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between px-3.5">
-          <a href="settings.php" class="block hover:underline">
-            <p class="text-xs font-bold text-slate-900"><?= htmlspecialchars($admin['full_name'] ?? 'Administrator') ?></p>
-            <p class="text-[11px] text-slate-400">@<?= htmlspecialchars($admin['username'] ?? 'admin') ?> &bull; Settings</p>
+        <div class="pt-3 mt-2 border-t border-slate-100 flex items-center justify-between px-3.5">
+          <a href="settings.php" class="inline-flex items-center gap-2 hover:opacity-80">
+            <div class="w-6 h-6 rounded-full bg-blue-50 text-[#2854A6] font-bold text-[11px] flex items-center justify-center border border-blue-200">
+              <?= strtoupper(substr($admin['username'] ?? 'A', 0, 1)) ?>
+            </div>
+            <span class="text-xs font-medium text-slate-800">
+              @<?= htmlspecialchars($admin['username'] ?? 'admin') ?>
+            </span>
           </a>
           <a
             href="logout.php"
-            class="text-xs font-semibold text-red-600 hover:underline px-2.5 py-1.5 rounded-lg bg-red-50"
+            class="text-xs font-medium text-red-600 hover:text-red-700 px-2.5 py-1 rounded-md bg-red-50 hover:bg-red-100 transition-colors"
           >
             Sign Out
           </a>
