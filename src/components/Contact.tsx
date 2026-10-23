@@ -1,13 +1,48 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { submitContactInquiry } from "@/lib/api";
 
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    location: "",
+    service: "Solar PV Installation & Storage",
+    message: "",
+  });
+  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    setErrorMessage(null);
+
+    const res = await submitContactInquiry(formData);
+
+    if (res.success) {
+      setSubmitted(true);
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        location: "",
+        service: "Solar PV Installation & Storage",
+        message: "",
+      });
+    } else {
+      setErrorMessage(res.message);
+    }
+
+    setSubmitting(false);
+  };
+
+  const handleReset = () => {
+    setSubmitted(false);
+    setErrorMessage(null);
   };
 
   return (
@@ -118,13 +153,13 @@ export default function Contact() {
           <div>
             {submitted ? (
               <div className="bg-surface border border-border p-10 text-center">
-                <div className="w-14 h-14 bg-brand-blue mx-auto flex items-center justify-center mb-6">
+                <div className="w-14 h-14 bg-emerald-600 mx-auto flex items-center justify-center mb-6 text-white rounded-full">
                   <svg
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="#fff"
+                    stroke="currentColor"
                     strokeWidth="2.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -135,16 +170,39 @@ export default function Contact() {
                 <h3 className="text-[1.3rem] font-heading mb-3">
                   Inquiry Received.
                 </h3>
-                <p className="text-[0.9rem] text-text-muted">
-                  Thank you for reaching out. A TrueVolt Systems representative will contact you
-                  shortly to discuss your technical requirements.
+                <p className="text-[0.9rem] text-text-muted mb-6">
+                  Thank you for reaching out. Your request has been logged in our system and an engineering representative will contact you shortly to review your technical requirements.
                 </p>
+                <button
+                  type="button"
+                  onClick={handleReset}
+                  className="inline-flex items-center justify-center px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-brand-blue border border-brand-blue/30 hover:bg-brand-blue/5 transition-colors"
+                >
+                  Submit Another Inquiry
+                </button>
               </div>
             ) : (
               <form
                 onSubmit={handleSubmit}
                 className="bg-surface border border-border p-8 lg:p-10"
               >
+                {errorMessage && (
+                  <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 text-xs rounded-sm flex flex-col gap-2">
+                    <p className="font-semibold">{errorMessage}</p>
+                    <p className="text-red-600 text-[11px]">
+                      Need immediate help? Reach us directly via{" "}
+                      <a
+                        href="https://wa.me/254748455070"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline font-bold text-emerald-700 hover:text-emerald-800"
+                      >
+                        WhatsApp (+254 748 455 070)
+                      </a>.
+                    </p>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
                   <div>
                     <label
@@ -157,6 +215,8 @@ export default function Contact() {
                       id="contact-name"
                       type="text"
                       required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="e.g. Johan Smith"
                       className="w-full border border-border bg-transparent px-4 py-3 text-[0.88rem] text-text focus:border-brand-blue transition-colors"
                     />
@@ -172,26 +232,48 @@ export default function Contact() {
                       id="contact-phone"
                       type="tel"
                       required
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       placeholder="+254 7..."
                       className="w-full border border-border bg-transparent px-4 py-3 text-[0.88rem] text-text focus:border-brand-blue transition-colors"
                     />
                   </div>
                 </div>
 
-                <div className="mb-5">
-                  <label
-                    htmlFor="contact-email"
-                    className="block text-[0.72rem] font-medium uppercase tracking-wider text-text mb-2"
-                  >
-                    Email Address *
-                  </label>
-                  <input
-                    id="contact-email"
-                    type="email"
-                    required
-                    placeholder="name@company.co.ke"
-                    className="w-full border border-border bg-transparent px-4 py-3 text-[0.88rem] text-text focus:border-brand-blue transition-colors"
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                  <div>
+                    <label
+                      htmlFor="contact-email"
+                      className="block text-[0.72rem] font-medium uppercase tracking-wider text-text mb-2"
+                    >
+                      Email Address *
+                    </label>
+                    <input
+                      id="contact-email"
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      placeholder="name@company.co.ke"
+                      className="w-full border border-border bg-transparent px-4 py-3 text-[0.88rem] text-text focus:border-brand-blue transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="contact-location"
+                      className="block text-[0.72rem] font-medium uppercase tracking-wider text-text mb-2"
+                    >
+                      Location / Region
+                    </label>
+                    <input
+                      id="contact-location"
+                      type="text"
+                      value={formData.location}
+                      onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                      placeholder="e.g. Westlands, Nairobi"
+                      className="w-full border border-border bg-transparent px-4 py-3 text-[0.88rem] text-text focus:border-brand-blue transition-colors"
+                    />
+                  </div>
                 </div>
 
                 <div className="mb-5">
@@ -204,14 +286,14 @@ export default function Contact() {
                   <select
                     id="contact-service"
                     required
-                    defaultValue=""
+                    value={formData.service}
+                    onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                     className="w-full border border-border bg-transparent px-4 py-3 text-[0.88rem] text-text focus:border-brand-blue transition-colors appearance-none cursor-pointer"
                   >
-                    <option value="" disabled>Select primary service area</option>
-                    <option value="solar">Solar PV Installation & Storage</option>
-                    <option value="electrical">Commercial / Residential Electrical</option>
-                    <option value="security">CCTV, Alarms & Access Control</option>
-                    <option value="multi">Turnkey / Multi-System Package</option>
+                    <option value="Solar PV Installation & Storage">Solar PV Installation & Storage</option>
+                    <option value="Commercial / Residential Electrical">Commercial / Residential Electrical</option>
+                    <option value="CCTV, Alarms & Access Control">CCTV, Alarms & Access Control</option>
+                    <option value="Turnkey / Multi-System Package">Turnkey / Multi-System Package</option>
                   </select>
                 </div>
 
@@ -220,19 +302,51 @@ export default function Contact() {
                     htmlFor="contact-message"
                     className="block text-[0.72rem] font-medium uppercase tracking-wider text-text mb-2"
                   >
-                    Project Scope & Location
+                    Project Scope & Details *
                   </label>
                   <textarea
                     id="contact-message"
                     rows={4}
                     required
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Provide details on project scope, property type, and timeline..."
                     className="w-full border border-border bg-transparent px-4 py-3 text-[0.88rem] text-text focus:border-brand-blue transition-colors resize-none"
                   />
                 </div>
 
-                <button type="submit" className="btn-primary w-full justify-center">
-                  Request Quotation
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="btn-primary w-full justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {submitting ? (
+                    <span className="flex items-center gap-2">
+                      <svg
+                        className="animate-spin h-4 w-4 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8v8H4z"
+                        />
+                      </svg>
+                      Sending Inquiry...
+                    </span>
+                  ) : (
+                    "Request Quotation"
+                  )}
                 </button>
               </form>
             )}
