@@ -421,24 +421,18 @@ export async function submitContactInquiry(data: {
   message: string;
 }): Promise<{ success: boolean; message: string }> {
   const apiBase = getApiBaseUrl();
-
-  if (!apiBase) {
-    // Simulated success when offline or in dev without cPanel connection
-    return {
-      success: true,
-      message: "Thank you for reaching out to TrueVolt Systems. We have received your inquiry.",
-    };
-  }
+  const endpoint = apiBase ? `${apiBase}/api/contact.php` : `/backend/api/contact.php`;
 
   try {
-    const response = await fetch(`${apiBase}/api/contact.php`, {
+    const response = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
 
-    const json = await response.json();
-    if (response.ok && json.status === "success") {
+    const json = await response.json().catch(() => null);
+
+    if (response.ok && json?.status === "success") {
       return {
         success: true,
         message: json.data?.message || "Thank you! Your inquiry has been sent to our engineering team.",
@@ -447,12 +441,13 @@ export async function submitContactInquiry(data: {
 
     return {
       success: false,
-      message: json.message || "Failed to submit inquiry. Please call or WhatsApp us directly.",
+      message: json?.message || "Failed to submit inquiry. Please call or WhatsApp us directly.",
     };
-  } catch (err) {
+  } catch (err: any) {
+    console.error("Inquiry submission error:", err);
     return {
-      success: true,
-      message: "Thank you! Your message has been noted.",
+      success: false,
+      message: "Unable to connect to the backend server. Please verify your connection or contact us via WhatsApp.",
     };
   }
 }
